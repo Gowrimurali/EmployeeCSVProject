@@ -3,9 +3,9 @@ package com.spartaglobal.gm;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class EmployeeDTO {
-        private int postition;
         private int empID;
         private String namePrefix;
         private String firstNAme;
@@ -17,10 +17,11 @@ public class EmployeeDTO {
         private LocalDate doj;
         private int salary;
         private boolean isCorrupted;
+        public static ArrayList<String> employees = new ArrayList<String>();
 
 
-    public EmployeeDTO(int empID, String namePrefix, String firstNAme, char middleInitial, String lastName, char gender, String email, LocalDate dob, LocalDate doj, int salary, int postition, boolean isCorrupted) {
-        this.postition = postition;
+
+    public EmployeeDTO(int empID, String namePrefix, String firstNAme, char middleInitial, String lastName, char gender, String email, LocalDate dob, LocalDate doj, int salary, boolean isCorrupted) {
         this.empID = empID;
         this.namePrefix = namePrefix;
         this.firstNAme = firstNAme;
@@ -31,8 +32,12 @@ public class EmployeeDTO {
         this.dob = dob;
         this.doj = doj;
         this.salary = salary;
-        this.isCorrupted = isCorrupted;
+        //Checker method
+        this.isCorrupted = false;
     }
+
+
+    public boolean isCorrupted() {return isCorrupted;}
 
     public int getEmpID() {
         return empID;
