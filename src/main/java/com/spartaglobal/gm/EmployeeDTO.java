@@ -74,6 +74,10 @@ public class EmployeeDTO {
         return salary;
     }
 
+    public boolean isCorrupted() {
+        return isCorrupted;
+    }
+
     @Override
     public String toString() {
         return "EmployeeDTO{" +
