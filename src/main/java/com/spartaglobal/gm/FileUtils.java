@@ -8,8 +8,6 @@ import java.util.Arrays;
 
 public class FileUtils {
     static void readFile(String fileName) {
-
-        int count = 0;
         try {
             var fileReader = new FileReader(fileName);
             var bufferedReader = new BufferedReader(fileReader);
@@ -18,10 +16,10 @@ public class FileUtils {
             while (line != null) {
                 String[] employeeData = line.split(",");
                 String[] splitEmpNum = employeeData[0].split("");
-                String[] splitSalary = employeeData[employeeData.length-1].split("");
+                String[] splitSalary = employeeData[employeeData.length - 1].split("");
                 extractEmployeeNumber(employeeData, splitEmpNum);
                 extractEmployeeSalary(employeeData, splitSalary);
-                EmployeeDTO.employees.set(count, Arrays.toString(employeeData));
+                EmployeeDTO.employees.add(Arrays.toString(employeeData));
                 line = bufferedReader.readLine();
             }
 
