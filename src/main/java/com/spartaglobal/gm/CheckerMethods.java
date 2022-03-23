@@ -1,5 +1,7 @@
 package com.spartaglobal.gm;
 
+import java.time.LocalDate;
+
 import static com.spartaglobal.gm.EmployeeDTO.employees;
 
 public class CheckerMethods {
@@ -18,6 +20,7 @@ public class CheckerMethods {
         }
         return true;
     }
+
     public boolean genderChecker(EmployeeDTO employee){
         if (employee.getGender() == 'M' || employee.getGender() == 'F'){
             return true;
@@ -25,4 +28,13 @@ public class CheckerMethods {
         return false;
     }
 
+    public boolean dateChecker(EmployeeDTO employee){
+        LocalDate dateOfBirth = employee.getDob();
+        if(dateOfBirth.getDayOfMonth() >= dateOfBirth.lengthOfMonth()){
+            return false;
+        }
+
+        return true;
+
+    }
 }
