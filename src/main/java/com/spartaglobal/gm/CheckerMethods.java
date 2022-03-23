@@ -5,7 +5,7 @@ import static com.spartaglobal.gm.EmployeeDTO.employees;
 public class CheckerMethods {
 
     public boolean employeeIdChecker(EmployeeDTO employee ){
-        if (employee.getEmpID()<= 99999){
+        if (employee.getEmpID() <= 99999){
             return false;
         }
         for(int i = 0; i < employees.size(); i++){
