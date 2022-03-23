@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class FileUtils {
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
     static void readFile(String fileName) {
-
-        int count = 0;
         try {
             var fileReader = new FileReader(fileName);
             var bufferedReader = new BufferedReader(fileReader);
@@ -18,10 +19,11 @@ public class FileUtils {
             while (line != null) {
                 String[] employeeData = line.split(",");
                 String[] splitEmpNum = employeeData[0].split("");
-                String[] splitSalary = employeeData[employeeData.length-1].split("");
+                String[] splitSalary = employeeData[employeeData.length - 1].split("");
+                EmployeeDTO employeeDTO = new EmployeeDTO(getIntEmpID(employeeData[0]), employeeData[1], employeeData[2], getCharMiddleInitial(employeeData[3]), employeeData[4], getCharGender(employeeData[5]), employeeData[6], getLocalDateDoB(employeeData[7]), getLocalDateDoJ(employeeData[8]),getIntSalary(employeeData[9]));
                 extractEmployeeNumber(employeeData, splitEmpNum);
                 extractEmployeeSalary(employeeData, splitSalary);
-                EmployeeDTO.employees.set(count, Arrays.toString(employeeData));
+                EmployeeDTO.employees.add(Arrays.toString(employeeData));
                 line = bufferedReader.readLine();
             }
 
@@ -48,4 +50,30 @@ public class FileUtils {
         }
         employeeData[0] = employeeNum;
     }
+
+    private static int getIntEmpID(String empID){
+        return Integer.parseInt(empID);
+    }
+
+    private static char getCharMiddleInitial(String middleInitial){
+        return middleInitial.charAt(0);
+    }
+
+    private static char getCharGender(String gender){
+        return gender.charAt(0);
+    }
+
+    private static LocalDate getLocalDateDoB(String dob){
+
+        return LocalDate.parse(dob,formatter);
+    }
+
+    private static LocalDate getLocalDateDoJ(String doj){
+        return LocalDate.parse(doj,formatter);
+    }
+
+    private static int getIntSalary(String salary){
+        return Integer.parseInt(salary);
+    }
+
 }
