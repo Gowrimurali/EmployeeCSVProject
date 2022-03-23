@@ -16,11 +16,12 @@ public class EmployeeDTO {
         private LocalDate dob;
         private LocalDate doj;
         private int salary;
+        private boolean isCorrupted;
         public static ArrayList<String> employees = new ArrayList<String>();
 
 
 
-    public EmployeeDTO(int empID, String namePrefix, String firstNAme, char middleInitial, String lastName, char gender, String email, LocalDate dob, LocalDate doj, int salary) {
+    public EmployeeDTO(int empID, String namePrefix, String firstNAme, char middleInitial, String lastName, char gender, String email, LocalDate dob, LocalDate doj, int salary, boolean isCorrupted) {
         this.empID = empID;
         this.namePrefix = namePrefix;
         this.firstNAme = firstNAme;
@@ -32,7 +33,11 @@ public class EmployeeDTO {
         this.doj = doj;
         this.salary = salary;
         //Checker method
+        this.isCorrupted = false;
     }
+
+
+    public boolean isCorrupted() {return isCorrupted;}
 
     public int getEmpID() {
         return empID;
@@ -74,6 +79,9 @@ public class EmployeeDTO {
         return salary;
     }
 
+    public boolean isCorrupted() {
+        return isCorrupted;
+    }
 
     @Override
     public String toString() {
@@ -90,9 +98,6 @@ public class EmployeeDTO {
                 ", salary=" + salary +
                 '}';
     }
-
-
-
 }
 
 
