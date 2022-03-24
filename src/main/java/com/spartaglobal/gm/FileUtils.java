@@ -11,6 +11,7 @@ import java.util.Arrays;
 public class FileUtils {
 
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+
     static void readFile(String fileName) {
         try {
             EmployeeDTO.unCorruptedList.removeAll(EmployeeDTO.unCorruptedList);
@@ -20,21 +21,35 @@ public class FileUtils {
             var bufferedReader = new BufferedReader(fileReader);
             bufferedReader.readLine();
             String line = bufferedReader.readLine();
-            while (line != null) {
-                String[] employeeData = line.split(",");
-                EmployeeDTO employeeDTO = new EmployeeDTO(getIntEmpID(employeeData[0]), employeeData[1], employeeData[2], getCharMiddleInitial(employeeData[3]), employeeData[4], getCharGender(employeeData[5]), employeeData[6], getLocalDateDoB(employeeData[7]), getLocalDateDoJ(employeeData[8]),getIntSalary(employeeData[9]));
-                if(CheckerMethods.employeeIdChecker(employeeDTO) && CheckerMethods.genderChecker(employeeDTO)){
-                    if(CheckerMethods.dateChecker(employeeDTO)){
-                        EmployeeDTO.unCorruptedList.add(employeeDTO);
-                    }else{
+            if(fileName.equals("src/main/resources/EmployeeRecords.csv")){
+                while (line != null) {
+                    String[] employeeData = line.split(",");
+                    EmployeeDTO employeeDTO = new EmployeeDTO(getIntEmpID(employeeData[0]), employeeData[1], employeeData[2], getCharMiddleInitial(employeeData[3]), employeeData[4], getCharGender(employeeData[5]), employeeData[6], getLocalDateDoB(employeeData[7]), getLocalDateDoJ(employeeData[8]), getIntSalary(employeeData[9]));
+                    if (CheckerMethods.employeeIdChecker(employeeDTO) && CheckerMethods.genderChecker(employeeDTO)) {
+                        if (CheckerMethods.dateChecker(employeeDTO)) {
+                            EmployeeDTO.unCorruptedList.add(employeeDTO);
+                            CreateDatabase.createDatabase(employeeData,fileName, false);
+                        } else {
+                            EmployeeDTO.corruptedList.add(employeeDTO);
+                            CreateDatabase.createDatabase(employeeData,fileName, true);
+                        }
+                    } else {
                         EmployeeDTO.corruptedList.add(employeeDTO);
                     }
-                }else{
-                    EmployeeDTO.corruptedList.add(employeeDTO);
+                    EmployeeDTO.employees.add(employeeDTO);
+                    line = bufferedReader.readLine();
                 }
-                EmployeeDTO.employees.add(employeeDTO);
-                line = bufferedReader.readLine();
+            }else{
+                while (line != null) {
+                    String[] employeeData = line.split(",");
+                    EmployeeDTO employeeDTO = new EmployeeDTO(getIntEmpID(employeeData[0]), employeeData[1], employeeData[2], getCharMiddleInitial(employeeData[3]), employeeData[4], getCharGender(employeeData[5]), employeeData[6], getLocalDateDoB(employeeData[7]), getLocalDateDoJ(employeeData[8]),getIntSalary(employeeData[9]));
+                    EmployeeDTO.employees.add(employeeDTO);
+                    CreateDatabase.createDatabase(employeeData,fileName,false);
+                    line = bufferedReader.readLine();
+                }
             }
+
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
