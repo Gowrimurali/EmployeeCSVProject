@@ -8,7 +8,7 @@ public class App
         FileUtils.readFile("src/main/resources/EmployeeRecords.csv");
         Display.displayFiles();
 
-//        FileUtils.readFile("src/main/resources/EmployeeRecords.csv");
+        FileUtils.readFile("src/main/resources/EmployeeRecords.csv");
         double startTime = System.nanoTime();
         FileReadForLargeRecord.readFile("src/main/resources/EmployeeRecordsLarge.csv");
         double stopTime = System.nanoTime();
@@ -18,4 +18,3 @@ public class App
         Display.displayFiles();
     }
 }
-
