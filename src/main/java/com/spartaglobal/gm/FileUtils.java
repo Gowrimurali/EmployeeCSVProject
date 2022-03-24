@@ -13,6 +13,9 @@ public class FileUtils {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
     static void readFile(String fileName) {
         try {
+            EmployeeDTO.unCorruptedList.removeAll(EmployeeDTO.unCorruptedList);
+            EmployeeDTO.corruptedList.removeAll(EmployeeDTO.corruptedList);
+            EmployeeDTO.employees.removeAll(EmployeeDTO.employees);
             var fileReader = new FileReader(fileName);
             var bufferedReader = new BufferedReader(fileReader);
             bufferedReader.readLine();

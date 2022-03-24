@@ -10,7 +10,7 @@ public class App
         Logger.createHandler();
         Logger.InfoMessage("Starting from main method");
         FileUtils.readFile("src/main/resources/EmployeeRecords.csv");
-       Display.displayFiles();
+        Display.displayFiles();
 //
 ////        FileUtils.readFile("src/main/resources/EmployeeRecords.csv");
 //        double startTime = System.nanoTime();
