@@ -16,7 +16,9 @@ public class EmployeeDTO {
         private LocalDate dob;
         private LocalDate doj;
         private int salary;
-        public static ArrayList<String> employees = new ArrayList<String>();
+        public static ArrayList<EmployeeDTO> employees = new ArrayList<EmployeeDTO>();
+        public static ArrayList<EmployeeDTO> unCorruptedList = new ArrayList<EmployeeDTO>();
+        public static ArrayList<EmployeeDTO> corruptedList = new ArrayList<EmployeeDTO>();
 
 
 
@@ -31,7 +33,6 @@ public class EmployeeDTO {
         this.dob = dob;
         this.doj = doj;
         this.salary = salary;
-        //Checker method
     }
 
     public int getEmpID() {
