@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class FileUtils {
+
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
     static void readFile(String fileName) {
         try {
@@ -18,12 +19,17 @@ public class FileUtils {
             String line = bufferedReader.readLine();
             while (line != null) {
                 String[] employeeData = line.split(",");
-                String[] splitEmpNum = employeeData[0].split("");
-                String[] splitSalary = employeeData[employeeData.length - 1].split("");
                 EmployeeDTO employeeDTO = new EmployeeDTO(getIntEmpID(employeeData[0]), employeeData[1], employeeData[2], getCharMiddleInitial(employeeData[3]), employeeData[4], getCharGender(employeeData[5]), employeeData[6], getLocalDateDoB(employeeData[7]), getLocalDateDoJ(employeeData[8]),getIntSalary(employeeData[9]));
-                extractEmployeeNumber(employeeData, splitEmpNum);
-                extractEmployeeSalary(employeeData, splitSalary);
-                EmployeeDTO.employees.add(Arrays.toString(employeeData));
+                if(CheckerMethods.employeeIdChecker(employeeDTO) && CheckerMethods.genderChecker(employeeDTO)){
+                    if(CheckerMethods.dateChecker(employeeDTO)){
+                        EmployeeDTO.unCorruptedList.add(employeeDTO);
+                    }else{
+                        EmployeeDTO.corruptedList.add(employeeDTO);
+                    }
+                }else{
+                    EmployeeDTO.corruptedList.add(employeeDTO);
+                }
+                EmployeeDTO.employees.add(employeeDTO);
                 line = bufferedReader.readLine();
             }
 
@@ -43,7 +49,7 @@ public class FileUtils {
         employeeData[employeeData.length - 1] = salary;
     }
 
-    private static void extractEmployeeNumber(String[] employeeData, String[] splitEmpNum) {
+    public static void extractEmployeeNumber(String[] employeeData, String[] splitEmpNum) {
         String employeeNum = "";
         for(int i = 1; i < splitEmpNum.length; i++){
             employeeNum.concat(splitEmpNum[i]);
