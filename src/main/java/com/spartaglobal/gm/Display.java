@@ -1,22 +1,20 @@
 package com.spartaglobal.gm;
 
-public class Display {
-//    public static void displayFiles(EmployeeDTO employeeDTO){
-//        Display.displayCorruptedfiles(employeeDTO);
-//        Display.displayUncorruptedfiles(employeeDTO);
-//    }
+import java.util.ArrayList;
 
-//    private static void displayCorruptedfiles(EmployeeDTO employeeDTO){
-//        if(employeeDTO.isCorrupted()){
-//            System.out.println(employeeDTO.toString());
-//        }
-//
-//    }
-//
-//    private static void displayUncorruptedfiles(EmployeeDTO employeeDTO){
-//        if(!employeeDTO.isCorrupted()){
-//            System.out.println(employeeDTO.toString());
-//        }
-//    }
+public class Display {
+    public static void displayFiles(){
+        System.out.println("Corrupted:");
+        Display.displayList(EmployeeDTO.unCorruptedList);
+        System.out.println("Uncorrupted:");
+        Display.displayList(EmployeeDTO.corruptedList);
+        System.out.println("Uncorrupted:");
+        System.out.println(EmployeeDTO.unCorruptedList.size());
+        System.out.println(EmployeeDTO.corruptedList.size());
+    }
+
+    private static void displayList(ArrayList<EmployeeDTO> list){
+        list.forEach((employee) -> System.out.println(employee.toString()));
+    }
 
 }
