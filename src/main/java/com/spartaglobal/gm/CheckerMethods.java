@@ -32,8 +32,6 @@ public class CheckerMethods {
         if(dateOfBirth.getDayOfMonth() >= dateOfBirth.lengthOfMonth()){
             return false;
         }
-
         return true;
-
     }
 }
