@@ -10,20 +10,21 @@ public class App
    public static void main(String[] args) {
 //        Logger.createHandler();
 //        Logger.InfoMessage("Starting from main method");
-        double startTime = System.nanoTime();
-        ThreadRunner.runThreads();
-        //ConnectionManager.closeConnection();
-        double stopTime = System.nanoTime();
-        System.out.println("Time in milliseconds " + (stopTime - startTime) / 1000000);
-       Logger.createHandler();
-       Logger.InfoMessage("Starting from main method");
-       FileUtils.readFile("src/main/resources/EmployeeRecords.csv");
-       Display.displayFiles();
-
-
-
-//        FileUtils.readFile("src/main/resources/EmployeeRecords.csv");
+//        double startTime = System.nanoTime();
+//        ThreadRunner.runThreads();
+//        //ConnectionManager.closeConnection();
+//        double stopTime = System.nanoTime();
+//        System.out.println("Time in milliseconds " + (stopTime - startTime) / 1000000);
+//       Logger.createHandler();
+//       Logger.InfoMessage("Starting from main method");
+//       FileUtils.readFile("src/main/resources/EmployeeRecords.csv");
 //       Display.displayFiles();
+//
+       FileUtils.readFile("src/main/resources/EmployeeRecordsLarge.csv");
+       CreateDatabase.deleteFromEmployeeRecords("employeerecordslarge");
+       Display.displayFiles();
+       ThreadRunner.runThreads(EmployeeDTO.employees);
+
 
 
 //
