@@ -9,7 +9,7 @@ public class CreateEmployeeLargeRecordDatabase {
         Connection connection = ConnectionManager.getConnection();
         EmployeeDAO employeeDAO = new EmployeeDAO(connection);
         PreparedStatement preparedStatement = null;
-        employeeDAO.insertINTOEMployeeRecordsLarge(preparedStatement,Integer.parseInt(largeEmployeeRecordData[0]),
+        CreateDatabase.insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]),
                 largeEmployeeRecordData[1],
                 largeEmployeeRecordData[2],
                 largeEmployeeRecordData[3],
@@ -18,7 +18,7 @@ public class CreateEmployeeLargeRecordDatabase {
                 largeEmployeeRecordData[6],
                 largeEmployeeRecordData[7],
                 largeEmployeeRecordData[8],
-                Integer.parseInt(largeEmployeeRecordData[9]));
+                Integer.parseInt(largeEmployeeRecordData[9]),SQLInterface.INSERT_TO_LARGE_DB);
 
 
     }

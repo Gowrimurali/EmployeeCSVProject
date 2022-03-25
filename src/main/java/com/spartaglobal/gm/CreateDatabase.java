@@ -7,35 +7,29 @@ import java.util.ArrayList;
 
 public class CreateDatabase {
 
-    public static void createDatabase(String[] largeEmployeeRecordData, String csvPath, boolean isCorrupted){
+    public static void createDatabase(ArrayList<EmployeeDTO> employees, String csvPath, boolean isCorrupted){
+
         Connection connection = ConnectionManager.getConnection();
         EmployeeDAO employeeDAO = new EmployeeDAO(connection);
         if (csvPath.equals("src/main/resources/EmployeeRecords.csv")){
             if(isCorrupted) {
                 String fileName = "employeerecordscorrupted";
-                deleteFromEmployeeRecords(fileName);
-                insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]), fileName);
+                insertINTOEmployeeRecords(employees.get(0).getEmpID(), employees.get(1).getNamePrefix(), employees.get(2).getFirstNAme(), String.valueOf(employees.get(3).getMiddleInitial()), employees.get(4).getLastName(), String.valueOf(employees.get(5).getGender()), employees.get(6).getEmail(), employees.get(7).getDob().toString(), employees.get(8).getDoj().toString(), employees.get(9).getSalary(), SQLInterface.INSERT_TO_CORRUPTED_DB);
             }else {
                 String fileName = "employeerecordsuncorrupted";
-                deleteFromEmployeeRecords(fileName);
-                insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]), fileName);
+                insertINTOEmployeeRecords(employees.get(0).getEmpID(), employees.get(1).getNamePrefix(), employees.get(2).getFirstNAme(), String.valueOf(employees.get(3).getMiddleInitial()), employees.get(4).getLastName(), String.valueOf(employees.get(5).getGender()), employees.get(6).getEmail(), employees.get(7).getDob().toString(), employees.get(8).getDoj().toString(), employees.get(9).getSalary(), SQLInterface.INSERT_TO_UNCORRUPTED_DB);
             }
         }else{
             String fileName = "employeerecordslarge";
-            deleteFromEmployeeRecords(fileName);
-            insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]),fileName);
+            insertINTOEmployeeRecords(employees.get(0).getEmpID(), employees.get(1).getNamePrefix(), employees.get(2).getFirstNAme(), String.valueOf(employees.get(3).getMiddleInitial()), employees.get(4).getLastName(), String.valueOf(employees.get(5).getGender()), employees.get(6).getEmail(), employees.get(7).getDob().toString(), employees.get(8).getDoj().toString(), employees.get(9).getSalary(),SQLInterface.INSERT_TO_LARGE_DB);
         }
         ConnectionManager.closeConnection();
     }
 
-    public static void insertINTOEmployeeRecords(Integer id, String namePrefix, String firstName, String middleInitial, String lastName, String gender, String email, String dob, String doj, Integer salary, String tableName){
+    public static void insertINTOEmployeeRecords(Integer id, String namePrefix, String firstName, String middleInitial, String lastName, String gender, String email, String dob, String doj, Integer salary, String statement){
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionManager.getConnection();
-        String statement = "";
-        String[] statementArr = {"INSERT INTO `employeerecords`.`",tableName,"` (`empID`, `namePrefix`, `firstName`, `middleInitial`, `lastName`, `gender`,`email`, `dob`, `doj`, `salary`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"};
-        statementConcat(statementArr, statement);
         try {
-            preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, namePrefix);
             preparedStatement.setString(3, firstName);
@@ -46,7 +40,7 @@ public class CreateDatabase {
             preparedStatement.setString(8, dob);
             preparedStatement.setString(9, doj);
             preparedStatement.setInt(10, salary);
-            preparedStatement.execute();
+            preparedStatement.addBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,7 +55,7 @@ public class CreateDatabase {
     public static void deleteFromEmployeeRecords(String tableName){
 
         String statement = "";
-        String[] statementArr ={"DELETE FROM `employeerecords`.`","employeerecordslarge","`"};
+        String[] statementArr ={"DELETE FROM `employeerecords`.`",tableName,"`"};
         statementConcat(statementArr, statement);
         Connection connection = ConnectionManager.getConnection();
         EmployeeDAO employeeDAO = new EmployeeDAO(connection);

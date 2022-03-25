@@ -18,7 +18,7 @@ public class FileReadUsingThread extends Thread{
         Connection connection = ConnectionManager.getConnection();
         PreparedStatement preparedStatement =null;
         try {
-            preparedStatement = connection.prepareStatement(SQLInterface.INSERT_TO_DB);
+            preparedStatement = connection.prepareStatement(SQLInterface.INSERT_TO_LARGE_DB);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -26,7 +26,8 @@ public class FileReadUsingThread extends Thread{
         for (int i = startPosition; i<=endPosition; i++) {
             EmployeeDTO employee = EmployeeDTO.employees.get(i);
             synchronized (employeeDAO){
-            employeeDAO.insertINTOEMployeeRecordsLarge(preparedStatement,employee.getEmpID(),
+
+            CreateDatabase.insertINTOEmployeeRecords(employee.getEmpID(),
                     employee.getNamePrefix(),
                     employee.getFirstNAme(),
                     String.valueOf(employee.getMiddleInitial()),
@@ -35,7 +36,7 @@ public class FileReadUsingThread extends Thread{
                     employee.getEmail(),
                     employee.getDob().toString(),
                     employee.getDoj().toString(),
-                    employee.getSalary());
+                    employee.getSalary(),SQLInterface.INSERT_TO_LARGE_DB);
             }
         }
 
