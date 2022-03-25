@@ -1,8 +1,10 @@
-package com.spartaglobal.gm;
+package com.spartaglobal.gm.Checkers;
+
+import com.spartaglobal.gm.DataBase.EmployeeDTO;
 
 import java.time.LocalDate;
 
-import static com.spartaglobal.gm.EmployeeDTO.employees;
+import static com.spartaglobal.gm.DataBase.EmployeeDTO.employees;
 
 public class CheckerMethods {
 
@@ -34,5 +36,17 @@ public class CheckerMethods {
             return false;
         }
         return true;
+    }
+
+    public static void corruptionValidator(EmployeeDTO employeeDTO) {
+        if (CheckerMethods.employeeIdChecker(employeeDTO) && CheckerMethods.genderChecker(employeeDTO)) {
+            if (CheckerMethods.dateChecker(employeeDTO)) {
+                EmployeeDTO.unCorruptedList.add(employeeDTO);
+            } else {
+                EmployeeDTO.corruptedList.add(employeeDTO);
+            }
+        } else {
+            EmployeeDTO.corruptedList.add(employeeDTO);
+        }
     }
 }

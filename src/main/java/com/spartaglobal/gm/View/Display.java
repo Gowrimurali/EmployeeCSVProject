@@ -1,4 +1,6 @@
-package com.spartaglobal.gm;
+package com.spartaglobal.gm.View;
+
+import com.spartaglobal.gm.DataBase.EmployeeDTO;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.spartaglobal.gm;
+package com.spartaglobal.gm.DataBase;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,9 +12,7 @@ public class PropertiesLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return properties;
     }
-
 }
 

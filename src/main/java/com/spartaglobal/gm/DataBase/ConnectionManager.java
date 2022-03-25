@@ -1,6 +1,5 @@
-package com.spartaglobal.gm;
+package com.spartaglobal.gm.DataBase;
 
-import com.spartaglobal.gm.Logs.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,12 +8,9 @@ import java.sql.SQLException;
 public class ConnectionManager {
     private static Connection connection;
     public static Connection getConnection(){
-//        Logger.InfoMessage("Getting the connection to database");
-
         String url = PropertiesLoader.getProperties().getProperty("url");
         String username = PropertiesLoader.getProperties().getProperty("username");
         String password = PropertiesLoader.getProperties().getProperty("password");
-
         try {
             connection  = DriverManager.getConnection(url, username,password);
         } catch (SQLException e) {
