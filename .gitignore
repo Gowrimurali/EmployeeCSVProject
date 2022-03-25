@@ -50,5 +50,6 @@ out/
 *.iml
 *.ipr
 *.iws
-src/main/resources/
+src/main/resources/EmployeeRecords.csv
+src/main/resources/EmployeeRecordsLarge.csv
 /myJdbc.properties

@@ -1,7 +1,4 @@
-package com.spartaglobal.gm;
-//Emp ID,Name Prefix,First Name,Middle Initial,Last Name,Gender,E Mail,Date of Birth,Date of Joining,Salary
-
-
+package com.spartaglobal.gm.DataBase;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -91,9 +88,6 @@ public class EmployeeDTO {
                 ", salary=" + salary +
                 '}';
     }
-
-
-
 }
 
 

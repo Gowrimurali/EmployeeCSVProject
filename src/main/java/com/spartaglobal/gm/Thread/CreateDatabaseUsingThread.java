@@ -1,15 +1,19 @@
-package com.spartaglobal.gm;
+package com.spartaglobal.gm.Thread;
+import com.spartaglobal.gm.DataBase.ConnectionManager;
+import com.spartaglobal.gm.DataBase.CreateDatabase;
+import com.spartaglobal.gm.DataBase.EmployeeDTO;
+import com.spartaglobal.gm.DataBase.SQLInterface;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FileReadUsingThread extends Thread{
+public class CreateDatabaseUsingThread extends Thread{
 
     private final int startPosition;
     private final int endPosition;
 
-    public FileReadUsingThread(int startPosition, int endPosition) {
+    public CreateDatabaseUsingThread(int startPosition, int endPosition) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
     }
@@ -22,11 +26,18 @@ public class FileReadUsingThread extends Thread{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        EmployeeDAO employeeDAO = new EmployeeDAO(connection);
+        insertAll(preparedStatement);
+        try {
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void insertAll(PreparedStatement preparedStatement) {
         for (int i = startPosition; i<=endPosition; i++) {
             EmployeeDTO employee = EmployeeDTO.employees.get(i);
-            synchronized (employeeDAO){
-
+            synchronized (employee){
             CreateDatabase.insertINTOEmployeeRecords(employee.getEmpID(),
                     employee.getNamePrefix(),
                     employee.getFirstNAme(),
@@ -36,18 +47,10 @@ public class FileReadUsingThread extends Thread{
                     employee.getEmail(),
                     employee.getDob().toString(),
                     employee.getDoj().toString(),
-                    employee.getSalary(),SQLInterface.INSERT_TO_LARGE_DB);
+                    employee.getSalary(), preparedStatement);
             }
         }
-
-        try {
-            preparedStatement.executeBatch();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
-
-
 
 
     @Override
