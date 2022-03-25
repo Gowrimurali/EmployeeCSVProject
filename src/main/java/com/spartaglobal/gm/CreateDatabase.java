@@ -12,12 +12,18 @@ public class CreateDatabase {
         EmployeeDAO employeeDAO = new EmployeeDAO(connection);
         if (csvPath.equals("src/main/resources/EmployeeRecords.csv")){
             if(isCorrupted) {
-                insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]), "employeerecordscorrupted");
+                String fileName = "employeerecordscorrupted";
+                deleteFromEmployeeRecords(fileName);
+                insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]), fileName);
             }else {
-                insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]), "employeerecordsuncorrupted");
+                String fileName = "employeerecordsuncorrupted";
+                deleteFromEmployeeRecords(fileName);
+                insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]), fileName);
             }
         }else{
-            insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]),"employeerecordslarge");
+            String fileName = "employeerecordslarge";
+            deleteFromEmployeeRecords(fileName);
+            insertINTOEmployeeRecords(Integer.parseInt(largeEmployeeRecordData[0]), largeEmployeeRecordData[1], largeEmployeeRecordData[2], largeEmployeeRecordData[3], largeEmployeeRecordData[4], largeEmployeeRecordData[5], largeEmployeeRecordData[6], largeEmployeeRecordData[7], largeEmployeeRecordData[8], Integer.parseInt(largeEmployeeRecordData[9]),fileName);
         }
         ConnectionManager.closeConnection();
     }
@@ -27,9 +33,7 @@ public class CreateDatabase {
         Connection connection = ConnectionManager.getConnection();
         String statement = "";
         String[] statementArr = {"INSERT INTO `employeerecords`.`",tableName,"` (`empID`, `namePrefix`, `firstName`, `middleInitial`, `lastName`, `gender`,`email`, `dob`, `doj`, `salary`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"};
-        for(String part : statementArr){
-            statement.concat(part);
-        }
+        statementConcat(statementArr, statement);
         try {
             preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, id);
@@ -46,6 +50,29 @@ public class CreateDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void statementConcat(String[] statementArr, String statement) {
+        for(String part : statementArr){
+            statement.concat(part);
+        }
+    }
+
+    public static void deleteFromEmployeeRecords(String tableName){
+
+        String statement = "";
+        String[] statementArr ={"DELETE FROM `employeerecords`.`","employeerecordslarge","`"};
+        statementConcat(statementArr, statement);
+        Connection connection = ConnectionManager.getConnection();
+        EmployeeDAO employeeDAO = new EmployeeDAO(connection);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ConnectionManager.closeConnection();
     }
 }
 
