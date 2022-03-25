@@ -33,8 +33,6 @@ public class CheckerMethods {
         if(dateOfBirth.getDayOfMonth() >= dateOfBirth.lengthOfMonth() ||dateOfJoining.getDayOfMonth() >= dateOfJoining.lengthOfMonth() ){
             return false;
         }
-
         return true;
-
     }
 }

@@ -16,10 +16,10 @@ public class EmployeeDAO {
         }
     }
 
-    public void insertINTOEMployeeRecordsLarge(Integer id, String namePrefix, String firstName, String middleInitial, String lastName, String gender, String email, String dob, String doj, Integer salary){
-        PreparedStatement preparedStatement = null;
+
+    public void insertINTOEMployeeRecordsLarge(PreparedStatement preparedStatement, Integer id, String namePrefix, String firstName, String middleInitial, String lastName, String gender, String email, String dob, String doj, Integer salary){
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO `employeerecords`.`employeerecordslarge` (`empID`, `namePrefix`, `firstName`, `middleInitial`, `lastName`, `gender`,`email`, `dob`, `doj`, `salary`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+//            preparedStatement = connection.prepareStatement(SQLInterface.INSERT_TO_DB);
             preparedStatement.setInt(1,id);
             preparedStatement.setString(2,namePrefix);
             preparedStatement.setString(3,firstName);
@@ -30,10 +30,13 @@ public class EmployeeDAO {
             preparedStatement.setString(8, dob);
             preparedStatement.setString(9,doj);
             preparedStatement.setInt(10,salary);
-            preparedStatement.execute();
+            preparedStatement.addBatch();
+//            preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
 
 }
