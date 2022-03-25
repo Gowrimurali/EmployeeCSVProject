@@ -10,6 +10,7 @@ public class Display {
         Display.displayList(EmployeeDTO.corruptedList);
         System.out.println("Uncorrupted:");
         System.out.println(EmployeeDTO.unCorruptedList.size());
+        System.out.println("Corrupted:");
         System.out.println(EmployeeDTO.corruptedList.size());
     }
 

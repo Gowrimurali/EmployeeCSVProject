@@ -51,3 +51,4 @@ out/
 *.ipr
 *.iws
 src/main/resources/
+/myJdbc.properties
