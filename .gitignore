@@ -32,6 +32,8 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
+.src/main/resources/myJdbc.properties
+*.csv
 
 # Gradle
 .gradle/
@@ -48,3 +50,7 @@ out/
 *.iml
 *.ipr
 *.iws
+src/main/resources/EmployeeRecords.csv
+src/main/resources/EmployeeRecordsLarge.csv
+/myJdbc.properties
+src/main/resources/myJdbc.properties
