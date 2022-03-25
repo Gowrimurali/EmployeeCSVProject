@@ -25,8 +25,13 @@ public class CreateDatabase {
     public static void insertINTOEmployeeRecords(Integer id, String namePrefix, String firstName, String middleInitial, String lastName, String gender, String email, String dob, String doj, Integer salary, String tableName){
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionManager.getConnection();
+        String statement = "";
+        String[] statementArr = {"INSERT INTO `employeerecords`.`",tableName,"` (`empID`, `namePrefix`, `firstName`, `middleInitial`, `lastName`, `gender`,`email`, `dob`, `doj`, `salary`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"};
+        for(String part : statementArr){
+            statement.concat(part);
+        }
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO `employeerecords`.`"+ tableName +"` (`empID`, `namePrefix`, `firstName`, `middleInitial`, `lastName`, `gender`,`email`, `dob`, `doj`, `salary`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, namePrefix);
             preparedStatement.setString(3, firstName);
